@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import type { SoilType, CropType } from './types';
 import { Layers, Sprout } from 'lucide-react';
 
@@ -56,6 +57,27 @@ export function SoilCropSelector({
   onSoilChange,
   onCropChange
 }: SoilCropSelectorProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+  // Update selected category if selectedCrop changes from outside (e.g., presets)
+  useEffect(() => {
+    const crop = CROP_OPTIONS.find(c => c.type === selectedCrop);
+    if (crop) {
+      setSelectedCategory(prev => {
+        if (prev !== 'All' && crop.category !== prev) {
+          return crop.category;
+        }
+        return prev;
+      });
+    }
+  }, [selectedCrop]);
+
+  const categories = ['All', ...Array.from(new Set(CROP_OPTIONS.map(c => c.category)))];
+
+  const filteredCrops = selectedCategory === 'All'
+    ? CROP_OPTIONS
+    : CROP_OPTIONS.filter(c => c.category === selectedCategory);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {/* Soil Type Modular Selection */}
@@ -106,7 +128,7 @@ export function SoilCropSelector({
 
       {/* Target Crop Modular Selection */}
       <div className="rounded-2xl border border-border/70 bg-card p-5 sm:p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-border/50 pb-3">
+        <div className="flex items-start sm:items-center justify-between border-b border-border/50 pb-3 flex-col sm:flex-row gap-3 sm:gap-0">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
               <Sprout className="w-4 h-4" />
@@ -116,13 +138,26 @@ export function SoilCropSelector({
               <p className="text-xs text-muted-foreground">Cultivar requiring fertilizer optimization</p>
             </div>
           </div>
-          <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground">
-            {selectedCrop}
-          </span>
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="text-xs font-medium bg-secondary text-secondary-foreground border border-border/50 rounded-md px-2 py-1 outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+            >
+              {categories.map(cat => (
+                <option key={cat} value={cat}>
+                  {cat === 'All' ? 'All Categories' : cat}
+                </option>
+              ))}
+            </select>
+            <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground hidden sm:inline-block">
+              {selectedCrop}
+            </span>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2 pt-1">
-          {CROP_OPTIONS.map((crop) => {
+          {filteredCrops.map((crop) => {
             const isSelected = selectedCrop === crop.type;
             return (
               <button
