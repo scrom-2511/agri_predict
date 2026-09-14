@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import './App.css'
+import HomePage from './pages/home';
 import SignupPage from './pages/auth/signup';
 import SigninPage from './pages/auth/signin';
 import PredictorPage from './pages/predictor';
@@ -14,6 +15,8 @@ function App() {
       </div>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/predictor" element={<PredictorPage />} />

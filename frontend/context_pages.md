@@ -13,6 +13,17 @@ The application is built using React (Vite) and uses `react-router` for navigati
 
 ### 2. Pages (`src/pages/`)
 
+#### Home Page (`src/pages/home/`)
+- **`/` & `/home`** (`src/pages/home/index.tsx`):
+  - High-impact, agronomic landing page engineered with modern design tokens and rich telemetry aesthetics.
+  - **Live Model Telemetry Sandbox (Hero)**: Interactive scenario switcher (Wheat Loam, Cotton Black, Monsoon Paddy, Maize Sandy) showing real-time inference recalculation, climate sensor metrics, and N-P-K nutrient bar with 99.1% match score.
+  - **Telemetry & Impact Metrics Strip**: Highlights key capabilities (14 target compounds, 99.1% accuracy, 5 soil classes, zero nitrogen runoff target).
+  - **4-Stage Prescriptive Pipeline**: Comprehensive breakdown of micro-climate sensing, geological bio-profiling, chemical assay, and neural decision output.
+  - **Interactive Soil Profile Spectrum**: Dynamic explorer for Loamy, Black, Sandy, Clayey, and Red soils showcasing moisture retention indices, drainage profiles, high-affinity crops, and agronomic care rules.
+  - **14-Compound Fertilizer Catalog Preview**: Category-filtered card grid (High Nitrogen, Phosphatic, Potassium, Balanced NPK) displaying real specifications from `FERTILIZER_DATABASE` with chemical formulas, NPK badges, and application rates.
+  - **Field Provenance & Agronomist Testimonials**: Empirical farmer case studies highlighting yield gains and nutrient efficiency.
+  - **Conversion Call-to-Action & Full Footer**: Seamless navigation across the platform with links to `/predictor`, `/signin`, and `/signup`.
+
 #### Authentication (`src/pages/auth/`)
 - **`/signup`** (`src/pages/auth/signup.tsx`): 
   - A responsive, split-screen signup page following an editorial design language.
@@ -41,6 +52,8 @@ The application is built using React (Vite) and uses `react-router` for navigati
 
 ```typescript
 <Routes>
+  <Route path="/" element={<HomePage />} />
+  <Route path="/home" element={<HomePage />} />
   <Route path="/signup" element={<SignupPage />} />
   <Route path="/signin" element={<SigninPage />} />
   <Route path="/predictor" element={<PredictorPage />} />
