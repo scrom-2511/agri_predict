@@ -4,32 +4,23 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router";
 import { AuthLayout } from "@/pages/auth/common/auth-layout";
 
-export default function SignupPage() {
+export default function SigninPage() {
     return (
         <AuthLayout
-            title="Predict your next harvest."
-            description="Join forward-thinking farmers optimizing their crop yields through advanced predictive models."
+            title="Welcome back."
+            description="Log in to continue managing your predictive models and agricultural insights."
         >
             <div className="w-full max-w-sm mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <div className="space-y-2">
                     <h2 className="text-3xl font-semibold tracking-tight">
-                        Start predicting
+                        Sign in to your account
                     </h2>
                     <p className="text-muted-foreground">
-                        Enter your details to create an account.
+                        Enter your email and password below.
                     </p>
                 </div>
 
                 <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                    <div className="space-y-2">
-                        <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
-                        <Input
-                            id="name"
-                            placeholder="John Doe"
-                            required
-                            className="bg-transparent"
-                        />
-                    </div>
                     <div className="space-y-2">
                         <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                         <Input
@@ -41,7 +32,12 @@ export default function SignupPage() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                Forgot password?
+                            </a>
+                        </div>
                         <Input
                             id="password"
                             type="password"
@@ -51,7 +47,7 @@ export default function SignupPage() {
                     </div>
 
                     <Button className="w-full mt-2" size="lg">
-                        Sign Up
+                        Sign In
                     </Button>
                 </form>
 
@@ -86,12 +82,12 @@ export default function SignupPage() {
                     </div>
 
                     <p className="text-center text-sm text-muted-foreground mt-8">
-                        Already have an account?{" "}
+                        Don't have an account?{" "}
                         <Link
-                            to="/signin"
+                            to="/signup"
                             className="font-medium text-foreground underline-offset-4 hover:underline transition-colors"
                         >
-                            Sign in
+                            Sign up
                         </Link>
                     </p>
                 </div>
