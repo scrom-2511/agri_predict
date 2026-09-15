@@ -15,19 +15,14 @@ import {
     EyeOff,
     ArrowRight,
     Tractor,
-    GraduationCap,
-    FlaskConical,
     Check
 } from "lucide-react";
-
-type UserRole = "grower" | "agronomist" | "researcher";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [role, setRole] = useState<UserRole>("grower");
     const [agreedToTerms, setAgreedToTerms] = useState(true);
 
     // Calculate password strength
@@ -69,7 +64,7 @@ export default function SignupPage() {
     return (
         <AuthLayout
             title="Predict soil needs before you sow."
-            description="Join forward-thinking farmers and agronomists optimizing yield curves through advanced biochemical telemetry."
+            description="Join forward-thinking farmers and agronomists optimizing yield curves through advanced biochemical analysis."
             currentMode="signup"
         >
             <div className="w-full max-w-2xl mx-auto space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -210,7 +205,7 @@ export default function SignupPage() {
                             <span className="leading-tight text-[11px] sm:text-xs">
                                 I agree to the{" "}
                                 <a href="#" className="text-primary hover:underline underline-offset-2 font-medium">Terms</a>{" "}
-                                and agricultural data telemetry policies.
+                                and agricultural data privacy policies.
                             </span>
                         </label>
                     </div>
@@ -221,7 +216,7 @@ export default function SignupPage() {
                         disabled={isPending || !agreedToTerms}
                         className="w-full h-10 text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow transition-all gap-1.5 mt-1"
                     >
-                        <span>{isPending ? "Creating Account..." : "Create Telemetry Account"}</span>
+                        <span>{isPending ? "Creating Account..." : "Create Account"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                 </form>

@@ -95,13 +95,8 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
             className="w-full h-14 rounded-xl text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/20 transition-all flex items-center justify-between px-6 group cursor-pointer"
           >
             <div className="flex items-center gap-2.5">
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Sparkles className="w-5 h-5 text-primary-foreground/90 animate-pulse" />
-              )}
               <span className="font-semibold tracking-wide">
-                {isLoading ? 'Computing Agronomic Model...' : 'Analyze Telemetry & Predict Fertilizer'}
+                {isLoading ? 'Computing Agronomic Model...' : 'Analyze Data & Predict Fertilizer'}
               </span>
             </div>
 

@@ -40,7 +40,7 @@ export function AuthLayout({ children, title, description, currentMode = "signin
 
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-medium text-white/90">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>ML Model v2.4 Active</span>
+                        <span>ML Model Active</span>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@ export function AuthLayout({ children, title, description, currentMode = "signin
                     <div className="space-y-3 max-w-xl">
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold tracking-wide uppercase">
                             <Activity className="w-3.5 h-3.5" />
-                            <span>Precision Soil Telemetry</span>
+                            <span>Precision Soil Analysis</span>
                         </div>
                         <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-bold font-heading text-white leading-tight tracking-tight drop-shadow-md">
                             {title}
@@ -137,7 +137,7 @@ export function AuthLayout({ children, title, description, currentMode = "signin
                 <div className="pt-4 border-t border-border/50 text-xs text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-2 z-10">
                     <div className="flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                        <span>256-bit SSL encrypted • Agricultural telemetry platform</span>
+                        <span>256-bit SSL encrypted • Agricultural analysis platform</span>
                     </div>
                     <div className="flex items-center gap-4 text-muted-foreground/80">
                         <Link to="/" className="hover:text-foreground transition-colors">Privacy</Link>

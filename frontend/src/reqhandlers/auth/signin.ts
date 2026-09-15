@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const signinReq = async (data: any) => {
     try {
+        console.log(data)
         const res = await axios.post(`${BACKEND_URL}/api/auth/signin/`, data);
         return res.data;
     } catch (error: any) {

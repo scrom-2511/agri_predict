@@ -12,6 +12,12 @@ export type CropType =
   | 'Oil seeds' 
   | 'Pulses' 
   | 'Ground Nuts'
+  | 'rice'
+  | 'pomegranate'
+  | 'coffee'
+  | 'watermelon'
+  | 'kidneybeans'
+  | 'orange'
   | 'Rice'
   | 'Pomegranate'
   | 'Coffee'
@@ -28,6 +34,21 @@ export interface PredictorFormData {
   nitrogen: number;
   potassium: number;
   phosphorous: number;
+}
+
+export interface FertilizerPredictionPayload {
+  temperature: number;
+  humidity: number;
+  moisture: number;
+  soil_type: SoilType;
+  crop_type: string;
+  nitrogen: number;
+  potassium: number;
+  phosphorous: number;
+}
+
+export interface FertilizerPredictionResponse {
+  fertilizer: string;
 }
 
 export interface FertilizerDetails {

@@ -27,28 +27,29 @@ const SOIL_OPTIONS: SoilOption[] = [
 
 interface CropOption {
   type: CropType;
+  label: string;
   category: 'Cereal' | 'Cash Crop' | 'Legume' | 'Oilseed' | 'Fruit';
   iconEmoji: string;
 }
 
 const CROP_OPTIONS: CropOption[] = [
-  { type: 'Wheat', category: 'Cereal', iconEmoji: '🌾' },
-  { type: 'Paddy', category: 'Cereal', iconEmoji: '🌱' },
-  { type: 'Maize', category: 'Cereal', iconEmoji: '🌽' },
-  { type: 'Barley', category: 'Cereal', iconEmoji: '🌾' },
-  { type: 'Millets', category: 'Cereal', iconEmoji: '🥣' },
-  { type: 'Rice', category: 'Cereal', iconEmoji: '🍚' },
-  { type: 'Cotton', category: 'Cash Crop', iconEmoji: '☁️' },
-  { type: 'Sugarcane', category: 'Cash Crop', iconEmoji: '🎋' },
-  { type: 'Tobacco', category: 'Cash Crop', iconEmoji: '🍂' },
-  { type: 'Coffee', category: 'Cash Crop', iconEmoji: '☕' },
-  { type: 'Pulses', category: 'Legume', iconEmoji: '🫘' },
-  { type: 'Kidneybeans', category: 'Legume', iconEmoji: '🫘' },
-  { type: 'Ground Nuts', category: 'Oilseed', iconEmoji: '🥜' },
-  { type: 'Oil seeds', category: 'Oilseed', iconEmoji: '🌻' },
-  { type: 'Pomegranate', category: 'Fruit', iconEmoji: '🍎' },
-  { type: 'Watermelon', category: 'Fruit', iconEmoji: '🍉' },
-  { type: 'Orange', category: 'Fruit', iconEmoji: '🍊' },
+  { type: 'Wheat', label: 'Wheat', category: 'Cereal', iconEmoji: '🌾' },
+  { type: 'Paddy', label: 'Paddy', category: 'Cereal', iconEmoji: '🌱' },
+  { type: 'Maize', label: 'Maize', category: 'Cereal', iconEmoji: '🌽' },
+  { type: 'Barley', label: 'Barley', category: 'Cereal', iconEmoji: '🌾' },
+  { type: 'Millets', label: 'Millets', category: 'Cereal', iconEmoji: '🥣' },
+  { type: 'rice', label: 'Rice', category: 'Cereal', iconEmoji: '🍚' },
+  { type: 'Cotton', label: 'Cotton', category: 'Cash Crop', iconEmoji: '☁️' },
+  { type: 'Sugarcane', label: 'Sugarcane', category: 'Cash Crop', iconEmoji: '🎋' },
+  { type: 'Tobacco', label: 'Tobacco', category: 'Cash Crop', iconEmoji: '🍂' },
+  { type: 'coffee', label: 'Coffee', category: 'Cash Crop', iconEmoji: '☕' },
+  { type: 'Pulses', label: 'Pulses', category: 'Legume', iconEmoji: '🫘' },
+  { type: 'kidneybeans', label: 'Kidneybeans', category: 'Legume', iconEmoji: '🫘' },
+  { type: 'Ground Nuts', label: 'Ground Nuts', category: 'Oilseed', iconEmoji: '🥜' },
+  { type: 'Oil seeds', label: 'Oil seeds', category: 'Oilseed', iconEmoji: '🌻' },
+  { type: 'pomegranate', label: 'Pomegranate', category: 'Fruit', iconEmoji: '🍎' },
+  { type: 'watermelon', label: 'Watermelon', category: 'Fruit', iconEmoji: '🍉' },
+  { type: 'orange', label: 'Orange', category: 'Fruit', iconEmoji: '🍊' },
 ];
 
 export function SoilCropSelector({
@@ -61,7 +62,7 @@ export function SoilCropSelector({
 
   // Update selected category if selectedCrop changes from outside (e.g., presets)
   useEffect(() => {
-    const crop = CROP_OPTIONS.find(c => c.type === selectedCrop);
+    const crop = CROP_OPTIONS.find(c => c.type.toLowerCase() === selectedCrop.toLowerCase());
     if (crop) {
       setSelectedCategory(prev => {
         if (prev !== 'All' && crop.category !== prev) {
@@ -77,6 +78,8 @@ export function SoilCropSelector({
   const filteredCrops = selectedCategory === 'All'
     ? CROP_OPTIONS
     : CROP_OPTIONS.filter(c => c.category === selectedCategory);
+
+  const selectedCropOption = CROP_OPTIONS.find(c => c.type.toLowerCase() === selectedCrop.toLowerCase());
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -151,14 +154,14 @@ export function SoilCropSelector({
               ))}
             </select>
             <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground hidden sm:inline-block">
-              {selectedCrop}
+              {selectedCropOption?.label || selectedCrop}
             </span>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2 pt-1">
           {filteredCrops.map((crop) => {
-            const isSelected = selectedCrop === crop.type;
+            const isSelected = selectedCrop.toLowerCase() === crop.type.toLowerCase();
             return (
               <button
                 key={crop.type}
@@ -171,7 +174,7 @@ export function SoilCropSelector({
                 }`}
               >
                 <span>{crop.iconEmoji}</span>
-                <span>{crop.type}</span>
+                <span>{crop.label}</span>
                 <span className={`text-[9px] px-1 rounded ${
                   isSelected ? 'bg-black/20 text-white' : 'bg-muted text-muted-foreground'
                 }`}>

@@ -5,7 +5,6 @@ import {
   Sprout,
   ArrowRight,
   Cpu,
-  ShieldCheck,
   Layers,
   Thermometer,
   Droplets,
@@ -13,7 +12,6 @@ import {
   Sparkles,
   CheckCircle2,
   ChevronRight,
-  BarChart3,
   FlaskConical,
   Compass,
   Zap,
@@ -211,11 +209,13 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link to="/signin">
-              <Button variant="ghost" size="sm" className="text-sm font-medium">
-                Sign In
-              </Button>
-            </Link>
+            {!localStorage.getItem("user") && (
+              <Link to="/signin">
+                <Button variant="ghost" size="sm" className="text-sm font-medium">
+                  Sign In
+                </Button>
+              </Link>
+            )}
             <Link to="/predictor">
               <Button size="sm" className="gap-1.5 font-medium shadow-sm hover:shadow transition-all">
                 <span>Launch Engine</span>
@@ -242,7 +242,7 @@ export default function HomePage() {
               <div className="lg:col-span-6 space-y-6 text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/10 text-xs font-semibold text-primary">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Agronomic Telemetry · Model v2.4 Active</span>
+                  <span>Agronomic Analysis · Model Active</span>
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading tracking-tight leading-[1.15]">
@@ -251,20 +251,20 @@ export default function HomePage() {
                 </h1>
 
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                  Harness real-time micro-climate telemetry, soil profile physics, and chemical N-P-K assays. Our neural classifier computes the exact fertilizer formulation your soil requires from 14 verified compounds.
+                  Harness real-time micro-climate data, soil profile physics, and chemical N-P-K assays. Our neural classifier computes the exact fertilizer formulation your soil requires from 14 verified compounds.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <Link to="/predictor">
                     <Button size="lg" className="w-full sm:w-auto gap-2 px-6 shadow-md hover:shadow-lg transition-all text-base">
-                      <Sparkles className="w-4 h-4" />
+                      {/* <Sparkles className="w-4 h-4" /> */}
                       <span>Start Soil Diagnosis</span>
                       <ArrowRight className="w-4 h-4" />
                     </Button>
                   </Link>
                   <Link to="/signup">
                     <Button variant="outline" size="lg" className="w-full sm:w-auto text-base">
-                      Create Farmer Account
+                      Create Account
                     </Button>
                   </Link>
                 </div>
@@ -294,19 +294,12 @@ export default function HomePage() {
                       <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
                         <Cpu className="w-4 h-4" />
                       </div>
-                      <span className="font-heading font-semibold text-sm">Live Model Telemetry Sandbox</span>
+                      <span className="font-heading font-semibold text-sm">Live Model Sandbox</span>
                     </div>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground">
-                      Real-time Inference
-                    </span>
                   </div>
 
                   {/* Scenario Presets Selector */}
                   <div className="pt-4 space-y-3">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>Test Field Scenario:</span>
-                      <span className="text-primary font-medium">Click to switch</span>
-                    </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       {HERO_SCENARIOS.map((scenario) => {
@@ -316,8 +309,8 @@ export default function HomePage() {
                             key={scenario.id}
                             onClick={() => setSelectedScenario(scenario)}
                             className={`p-2.5 rounded-xl text-left transition-all border text-xs flex flex-col justify-between ${isSelected
-                                ? 'bg-primary/10 border-primary text-foreground ring-1 ring-primary/40'
-                                : 'bg-muted/30 border-border/60 hover:bg-muted/60 text-muted-foreground'
+                              ? 'bg-primary/10 border-primary text-foreground ring-1 ring-primary/40'
+                              : 'bg-muted/30 border-border/60 hover:bg-muted/60 text-muted-foreground'
                               }`}
                           >
                             <span className="font-semibold text-foreground line-clamp-1">{scenario.name}</span>
@@ -359,9 +352,9 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="h-2 w-full rounded-full bg-secondary overflow-hidden flex">
-                      <div style={{ width: `${(selectedScenario.nitrogen / 120) * 100}%` }} className="bg-emerald-500" title="Nitrogen" />
-                      <div style={{ width: `${(selectedScenario.phosphorus / 120) * 100}%` }} className="bg-sky-500" title="Phosphorus" />
-                      <div style={{ width: `${(selectedScenario.potassium / 120) * 100}%` }} className="bg-amber-500" title="Potassium" />
+                      <div style={{ width: `${(selectedScenario.nitrogen / (selectedScenario.nitrogen + selectedScenario.phosphorus + selectedScenario.potassium)) * 100}%` }} className="bg-emerald-500" title="Nitrogen" />
+                      <div style={{ width: `${(selectedScenario.phosphorus / (selectedScenario.nitrogen + selectedScenario.phosphorus + selectedScenario.potassium)) * 100}%` }} className="bg-sky-500" title="Phosphorus" />
+                      <div style={{ width: `${(selectedScenario.potassium / (selectedScenario.nitrogen + selectedScenario.phosphorus + selectedScenario.potassium)) * 100}%` }} className="bg-amber-500" title="Potassium" />
                     </div>
                   </div>
 
@@ -560,8 +553,8 @@ export default function HomePage() {
                     key={soil.type}
                     onClick={() => setSelectedSoil(soil.type)}
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${isActive
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted'
                       }`}
                   >
                     {soil.type} Soil
@@ -660,8 +653,8 @@ export default function HomePage() {
                     key={filter}
                     onClick={() => setFertilizerCategoryFilter(filter)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${fertilizerCategoryFilter === filter
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-secondary-foreground hover:bg-muted'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground hover:bg-muted'
                       }`}
                   >
                     {filter}
@@ -751,7 +744,7 @@ export default function HomePage() {
                 Tested across thousands of agricultural hectares.
               </h2>
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                By replacing blanket chemical applications with telemetry-driven diagnosis, farmers report measurable increases in both profit margins and soil vitality.
+                By replacing blanket chemical applications with data-driven diagnosis, farmers report measurable increases in both profit margins and soil vitality.
               </p>
             </div>
 
@@ -816,7 +809,7 @@ export default function HomePage() {
               </h2>
 
               <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-                Run your first soil telemetry assessment in seconds without mandatory sign-up, or create a grower account to store farm field histories.
+                Run your first soil assessment in seconds without mandatory sign-up, or create a grower account to store farm field histories.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -858,11 +851,11 @@ export default function HomePage() {
                 </span>
               </Link>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Precision soil telemetry and machine learning decision support for progressive agronomy.
+                Precision soil analysis and machine learning decision support for progressive agronomy.
               </p>
               <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Model Engine v2.4 Online</span>
+                <span>Model Engine Online</span>
               </div>
             </div>
 

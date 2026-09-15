@@ -9,6 +9,7 @@ from .serializers import SignupSerializer, SigninSerializer
 class SignupView(APIView):
 
     def post(self, request):
+        print(request.data)
         serializer = SignupSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -35,6 +36,7 @@ class SignupView(APIView):
 class SigninView(APIView):
 
     def post(self, request):
+        print(request.data)
         serializer = SigninSerializer(data=request.data)
 
         if serializer.is_valid():

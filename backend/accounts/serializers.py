@@ -38,20 +38,26 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class SigninSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    email = serializers.EmailField()
     password = serializers.CharField(
         write_only=True
     )
 
     def validate(self, data):
+        try:
+            user_obj = User.objects.get(email=data["email"])
+            username = user_obj.username
+        except User.DoesNotExist:
+            username = None
+
         user = authenticate(
-            username=data["username"],
+            username=username,
             password=data["password"]
         )
 
         if user is None:
             raise serializers.ValidationError(
-                "Invalid username or password."
+                "Invalid email or password."
             )
 
         if not user.is_active:

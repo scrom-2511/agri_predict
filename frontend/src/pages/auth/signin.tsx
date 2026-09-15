@@ -34,12 +34,12 @@ export default function SigninPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        signin({ username: email, password });
+        signin({ email: email, password });
     };
 
     return (
         <AuthLayout
-            title="Welcome back to your telemetry dashboard."
+            title="Welcome back to your dashboard."
             description="Access real-time soil profiling, predictive nutrient modeling, and micro-climate field analytics."
             currentMode="signin"
         >
@@ -48,7 +48,7 @@ export default function SigninPage() {
                 <div className="space-y-1.5 text-left pb-6">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
                         <KeyRound className="w-3.5 h-3.5" />
-                        <span>Secure Telemetry Access</span>
+                        <span>Secure Access</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl font-bold font-heading tracking-tight text-foreground">
                         Sign in to AgriPredict
@@ -122,7 +122,7 @@ export default function SigninPage() {
                         disabled={isPending}
                         className="w-full h-10 text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow transition-all gap-1.5 mt-1"
                     >
-                        <span>{isPending ? "Signing In..." : "Sign In to Telemetry Engine"}</span>
+                        <span>{isPending ? "Signing In..." : "Sign In"}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                 </form>

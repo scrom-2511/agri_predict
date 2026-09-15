@@ -1,19 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { PredictionForm } from '@/components/predictor/PredictionForm';
 import { PredictionResult } from '@/components/predictor/PredictionResult';
 import type { PredictorFormData } from '@/components/predictor/types';
-import { Sprout, Cpu, ArrowLeft } from 'lucide-react';
+import { predictFertilizerReq } from '@/reqhandlers/predictor';
+import { Sprout, Cpu, ArrowLeft, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 
-// The exact fertilizer outputs specified in the requirements
-const FERTILIZERS = [
-  'Urea', 'TSP', 'Superphosphate', 'Potassium sulfate.',
-  'Potassium chloride', 'DAP', '28-28', '20-20', '17-17-17',
-  '15-15-15', '14-35-14', '14-14-14', '10-26-26', '10-10-10'
-];
-
 export default function PredictorPage() {
-  const [isPredicting, setIsPredicting] = useState(false);
   const [prediction, setPrediction] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -24,33 +18,26 @@ export default function PredictorPage() {
     }
   }, [navigate]);
 
-  const handlePredict = (data: PredictorFormData) => {
-    setIsPredicting(true);
-
-    // Simulated agronomic neural network calculation delay
-    setTimeout(() => {
-      // Deterministic calculation based on input data so consistent tests yield consistent results
-      const hashString = `${data.temperature}-${data.humidity}-${data.moisture}-${data.soilType}-${data.cropType}-${data.nitrogen}-${data.phosphorous}-${data.potassium}`;
-      let hash = 0;
-      for (let i = 0; i < hashString.length; i++) {
-        hash = hashString.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      const index = Math.abs(hash) % FERTILIZERS.length;
-      setPrediction(FERTILIZERS[index]);
-      setIsPredicting(false);
-
-      // Smooth scroll to top of result
+  const { mutate: predict, isPending, error, reset: resetMutation } = useMutation({
+    mutationFn: predictFertilizerReq,
+    onSuccess: (data) => {
+      setPrediction(data.fertilizer);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1400);
+    },
+  });
+
+  const handlePredict = (data: PredictorFormData) => {
+    predict(data);
   };
 
   const handleReset = () => {
     setPrediction(null);
+    resetMutation();
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground flex flex-col">
-      
+
       {/* Top Application Bar */}
       <header className="sticky top-0 z-30 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -75,7 +62,7 @@ export default function PredictorPage() {
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Model v2.4 Online</span>
+              <span>Model  Online</span>
             </div>
             {prediction && (
               <button
@@ -104,12 +91,22 @@ export default function PredictorPage() {
                 Fertilizer Prescriptor.
               </h1>
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                Provide real-time soil analysis and micro-climate telemetry to calculate the optimal N-P-K nutrient compound for maximum yield velocity.
+                Provide real-time soil analysis and micro-climate data to calculate the optimal N-P-K nutrient compound for maximum yield velocity.
               </p>
             </div>
 
+            {error && (
+              <div className="p-4 rounded-xl border border-destructive/30 bg-destructive/10 text-destructive text-sm flex items-start gap-3 animate-in fade-in">
+                <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="font-semibold">Prediction Failed</p>
+                  <p className="text-xs opacity-90">{error.message}</p>
+                </div>
+              </div>
+            )}
+
             {/* Modular Form Container */}
-            <PredictionForm onSubmit={handlePredict} isLoading={isPredicting} />
+            <PredictionForm onSubmit={handlePredict} isLoading={isPending} />
           </div>
         ) : (
           <PredictionResult fertilizerName={prediction} onReset={handleReset} />

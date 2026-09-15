@@ -44,7 +44,7 @@ export function EnvironmentalMetrics({
           </div>
           <div>
             <h3 className="text-sm font-semibold text-foreground tracking-tight">Environmental Dynamics</h3>
-            <p className="text-xs text-muted-foreground">Ambient field and soil moisture telemetry</p>
+            <p className="text-xs text-muted-foreground">Ambient field and soil moisture parameters</p>
           </div>
         </div>
       </div>
