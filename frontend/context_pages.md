@@ -25,14 +25,22 @@ The application is built using React (Vite) and uses `react-router` for navigati
   - **Conversion Call-to-Action & Full Footer**: Seamless navigation across the platform with links to `/predictor`, `/signin`, and `/signup`.
 
 #### Authentication (`src/pages/auth/`)
+- **`AuthLayout`** (`src/pages/auth/common/auth-layout.tsx`):
+  - Split-screen telemetry authentication frame with responsive desktop/mobile optimization and balanced spatial proportions.
+  - Features a dynamic agricultural showcase panel with dark gradient overlays, brand navigation, live model status (`v2.4 Active`), platform capability stats (14 Verified Fertilizers, 99.1% Inference Precision, 0.0% Target Runoff Waste), and agronomist credibility testimonial.
+  - Includes top navigation breadcrumb (`← Back to AgriPredict`), mode-switcher (`Sign in` / `Create account`), and security compliance footer (`256-bit SSL encrypted`).
 - **`/signup`** (`src/pages/auth/signup.tsx`): 
-  - A responsive, split-screen signup page following an editorial design language.
-  - Features an agricultural-themed visual on the left side (desktop).
-  - Uses a clean, form-integrated layout on the right side without heavy card borders.
-  - Supports standard email/password registration and includes placeholder buttons for Google and Facebook OAuth login.
+  - Form container widened to `max-w-[480px]` with balanced padding, eliminating awkward dead space.
+  - Interactive profile type selector pills (*Grower / Farm*, *Agronomist*, *Researcher*).
+  - Enhanced tactile inputs with inset leading icons (`User`, `Mail`, `Lock`).
+  - Interactive, real-time password strength meter with 4-level colored progress bar and criteria checklist (8+ chars, numbers, symbols).
+  - Password show/hide toggle and terms agreement checkbox.
+  - Polished Google and GitHub OAuth authentication buttons.
 - **`/signin`** (`src/pages/auth/signin.tsx`): 
-  - A responsive, split-screen signin page mirroring the aesthetic of the signup page.
-  - Includes standard email/password login fields, a "Forgot password" link, and OAuth placeholders.
+  - Form container widened to `max-w-md` (460px) with balanced horizontal padding.
+  - 1-Click Demo Login Banner allowing instant test credentials autofill (`agronomist@agripredict.org`).
+  - Tactile inputs with leading icons (`Mail`, `Lock`) and password visibility toggle.
+  - Remember session checkbox, forgot password link, and Google/GitHub OAuth integrations.
 
 #### Fertilizer Predictor (`src/pages/predictor/`)
 - **`/predictor`** (`src/pages/predictor/index.tsx`):

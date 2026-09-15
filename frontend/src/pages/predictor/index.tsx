@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PredictionForm } from '@/components/predictor/PredictionForm';
 import { PredictionResult } from '@/components/predictor/PredictionResult';
 import type { PredictorFormData } from '@/components/predictor/types';
 import { Sprout, Cpu, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 // The exact fertilizer outputs specified in the requirements
 const FERTILIZERS = [
@@ -15,6 +15,14 @@ const FERTILIZERS = [
 export default function PredictorPage() {
   const [isPredicting, setIsPredicting] = useState(false);
   const [prediction, setPrediction] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userStr = localStorage.getItem("user");
+    if (!userStr) {
+      navigate("/signin");
+    }
+  }, [navigate]);
 
   const handlePredict = (data: PredictorFormData) => {
     setIsPredicting(true);

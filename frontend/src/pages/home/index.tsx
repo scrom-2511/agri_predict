@@ -177,18 +177,18 @@ export default function HomePage() {
   const filteredFertilizers = fertilizerCategoryFilter === 'All'
     ? fertilizerList.slice(0, 6) // Show top 6 on landing page for brevity
     : fertilizerList.filter(f => {
-        if (fertilizerCategoryFilter === 'Nitrogen') return f.category.includes('Nitrogen');
-        if (fertilizerCategoryFilter === 'Phosphorus') return f.category.includes('Phosph') || f.category.includes('Phosphate');
-        if (fertilizerCategoryFilter === 'Potassium') return f.category.includes('Potassium') || f.category.includes('Potash');
-        if (fertilizerCategoryFilter === 'Balanced') return f.category.includes('Balanced') || f.category.includes('Complete');
-        return true;
-      });
+      if (fertilizerCategoryFilter === 'Nitrogen') return f.category.includes('Nitrogen');
+      if (fertilizerCategoryFilter === 'Phosphorus') return f.category.includes('Phosph') || f.category.includes('Phosphate');
+      if (fertilizerCategoryFilter === 'Potassium') return f.category.includes('Potassium') || f.category.includes('Potash');
+      if (fertilizerCategoryFilter === 'Balanced') return f.category.includes('Balanced') || f.category.includes('Complete');
+      return true;
+    });
 
   const activeSoilData = SOIL_CHARACTERISTICS.find(s => s.type === selectedSoil) || SOIL_CHARACTERISTICS[0];
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground flex flex-col">
-      
+
       {/* 1. Global Navigation Bar */}
       <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -227,7 +227,7 @@ export default function HomePage() {
       </header>
 
       <main className="flex-1 flex flex-col">
-        
+
         {/* 2. Hero Section */}
         <section className="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-28 border-b border-border/50">
           {/* Subtle Agronomic Gradient Background */}
@@ -237,7 +237,7 @@ export default function HomePage() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
+
               {/* Left Column: Value Proposition & Copy */}
               <div className="lg:col-span-6 space-y-6 text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/10 text-xs font-semibold text-primary">
@@ -315,11 +315,10 @@ export default function HomePage() {
                           <button
                             key={scenario.id}
                             onClick={() => setSelectedScenario(scenario)}
-                            className={`p-2.5 rounded-xl text-left transition-all border text-xs flex flex-col justify-between ${
-                              isSelected
+                            className={`p-2.5 rounded-xl text-left transition-all border text-xs flex flex-col justify-between ${isSelected
                                 ? 'bg-primary/10 border-primary text-foreground ring-1 ring-primary/40'
                                 : 'bg-muted/30 border-border/60 hover:bg-muted/60 text-muted-foreground'
-                            }`}
+                              }`}
                           >
                             <span className="font-semibold text-foreground line-clamp-1">{scenario.name}</span>
                             <span className="text-[10px] opacity-75 mt-0.5">{scenario.soil} Soil · {scenario.crop}</span>
@@ -470,9 +469,6 @@ export default function HomePage() {
               {/* Step 1 */}
               <div className="p-6 rounded-2xl border border-border/80 bg-card hover:border-primary/40 transition-all duration-300 space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    01
-                  </div>
                   <h3 className="font-heading font-bold text-lg">Micro-Climate Sensing</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Capture ambient temperature, relative humidity, and volumetric soil moisture to determine transpiration stress and nutrient dissolution velocity.
@@ -487,9 +483,6 @@ export default function HomePage() {
               {/* Step 2 */}
               <div className="p-6 rounded-2xl border border-border/80 bg-card hover:border-primary/40 transition-all duration-300 space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    02
-                  </div>
                   <h3 className="font-heading font-bold text-lg">Soil & Crop Bio-profile</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Identify your geological soil structure (Sandy, Loamy, Black, Red, Clayey) alongside specific crop demands across cereals, pulses, and cash crops.
@@ -504,9 +497,6 @@ export default function HomePage() {
               {/* Step 3 */}
               <div className="p-6 rounded-2xl border border-border/80 bg-card hover:border-primary/40 transition-all duration-300 space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    03
-                  </div>
                   <h3 className="font-heading font-bold text-lg">N-P-K Macro Assay</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Evaluate existing elemental Nitrogen (N), Phosphorous (P), and Potassium (K) levels to reveal acute deficits and surplus mineral saturation.
@@ -521,9 +511,6 @@ export default function HomePage() {
               {/* Step 4 */}
               <div className="p-6 rounded-2xl border border-border/80 bg-card hover:border-primary/40 transition-all duration-300 space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    04
-                  </div>
                   <h3 className="font-heading font-bold text-lg">Neural Prescription</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Inference engine prescribes the optimal commercial compound, complete with application timing, dosage rates, and direct procurement dispatch.
@@ -572,11 +559,10 @@ export default function HomePage() {
                   <button
                     key={soil.type}
                     onClick={() => setSelectedSoil(soil.type)}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                      isActive
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${isActive
                         ? 'bg-primary text-primary-foreground shadow-sm'
                         : 'bg-card border border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted'
-                    }`}
+                      }`}
                   >
                     {soil.type} Soil
                   </button>
@@ -673,11 +659,10 @@ export default function HomePage() {
                   <button
                     key={filter}
                     onClick={() => setFertilizerCategoryFilter(filter)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                      fertilizerCategoryFilter === filter
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${fertilizerCategoryFilter === filter
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-secondary text-secondary-foreground hover:bg-muted'
-                    }`}
+                      }`}
                   >
                     {filter}
                   </button>
@@ -820,7 +805,7 @@ export default function HomePage() {
         <section className="py-20 relative overflow-hidden">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="rounded-3xl border border-primary/30 bg-gradient-to-b from-primary/10 via-primary/5 to-card p-8 sm:p-14 text-center space-y-6 relative shadow-lg">
-              
+
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-semibold">
                 <Activity className="w-3.5 h-3.5" />
                 <span>Ready For Next-Gen Agronomy</span>
@@ -861,7 +846,7 @@ export default function HomePage() {
       <footer className="border-t border-border/60 bg-muted/20 py-12 text-sm text-muted-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            
+
             {/* Brand column */}
             <div className="space-y-3 md:col-span-1">
               <Link to="/" className="flex items-center gap-2">
